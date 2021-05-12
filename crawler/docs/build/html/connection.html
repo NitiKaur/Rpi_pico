@@ -1,0 +1,722 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Connection to the MicroPython REPL &mdash; MicroPython 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting started with MicroPython on RaspberryPi Pico Port" href="micropython.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MicroPython
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="information.html">General Information about Raspberry Pi Pico Port</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setting up the Pico Port</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micropython.html">Getting started with MicroPython on RaspberryPi Pico Port</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Connection to the MicroPython REPL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usb">USB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uart">UART</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id1">UART</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#adc">ADC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#interrupts">Interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#multicore-support">Multicore Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#i2c">I2C</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#spi">SPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#pwm">PWM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#pio-support">PIO Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#irq">IRQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#uart-tx">UART TX</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MicroPython</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Connection to the MicroPython REPL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/connection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="connection-to-the-micropython-repl">
+<h1>Connection to the MicroPython REPL<a class="headerlink" href="#connection-to-the-micropython-repl" title="Permalink to this headline">¶</a></h1>
+<p>When MicroPython boots for the first time, it will sit and wait for you to connect and tell it what to do. You can load a .py file from your computer onto the board, but a more immediate way to interact with it is through what is called the readevaluate-print loop, or REPL (often pronounced similarly to “ripple”).</p>
+<blockquote>
+<div><p><em>Read</em> -  MicroPython waits for you to type in some text, followed by the enter key.</p>
+<p><em>Evaluate</em> - Whatever you typed is interpreted as Python code, and runs immediately.</p>
+<p><em>Print</em> -  Any results of the last line you typed are printed out for you to read.</p>
+<p><em>Loop</em> -  Go back to the start — prompt you for another line of code.</p>
+</div></blockquote>
+<p>There are two ways to connect to this REPL, so you can communicate with the MicroPython firmware on your board:
+over USB, and over the UART serial port on Raspberry Pi Pico GPIOs.</p>
+<div class="section" id="usb">
+<h2>USB<a class="headerlink" href="#usb" title="Permalink to this headline">¶</a></h2>
+<p><strong>Connecting from a Raspberry Pi over USB</strong></p>
+<p>The MicroPython firmware is equipped with a virtual USB serial port which is accessed through the micro USB
+connector on Raspberry Pi Pico. Your computer should notice this serial port and list it as a character device, most likely
+/dev/ttyACM0.</p>
+<blockquote>
+<div><p>TIP-You can run ls /dev/tty* to list your serial ports. There may be quite a few, but MicroPython’s USB serial will start
+with /dev/ttyACM. If in doubt, unplug the micro USB connector and see which one disappears. If you don’t see
+anything, you can try rebooting your Raspberry Pi.</p>
+</div></blockquote>
+<p>You can install minicom to access the serial port:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>$ sudo apt install minicom</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>and then open it as such:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>$ minicom -o -D /dev/ttyACM0</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Where the -D /dev/ttyACM0 is pointing minicom at MicroPython’s USB serial port, and the -o flag essentially means “just do
+it”. There’s no need to worry about baud rate, since this is a virtual serial port.
+Press the enter key a few times in the terminal where you opened minicom. You should see this:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This is a prompt. MicroPython wants you to type something in, and tell it what to do.
+If you press CTRL-D on your keyboard whilst the minicom terminal is focused, you should see a message similar to this:</p>
+<blockquote>
+<div><p>MPY: soft reboot
+MicroPython v1.13-422-g904433073 on 2021-01-19; Raspberry Pi Pico with RP2040
+Type “help()” for more information.
+&gt;&gt;&gt;</p>
+</div></blockquote>
+<p>This key combination tells MicroPython to reboot. You can do this at any time. When it reboots, MicroPython will print
+out a message saying exactly what firmware version it is running, and when it was built. Your version number will be
+different from the one shown here.</p>
+</div>
+<div class="section" id="uart">
+<h2>UART<a class="headerlink" href="#uart" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>REPL over UART is disabled by default.</p>
+</div>
+<p>The MicroPython port for RP2040 does not expose REPL over a UART port by default. However this default can be
+changed in the ports/rp2/mpconfigport.h source file. If you want to use the REPL over UART you’re going to have to build
+MicroPython yourself.
+Go ahead and download the MicroPython source and in ports/rp2/mpconfigport.h change MICROPY_HW_ENABLE_UART_REPL to 1
+to enable it.</p>
+<blockquote>
+<div><p>#define MICROPY_HW_ENABLE_UART_REPL (1) // useful if there is no USB</p>
+</div></blockquote>
+<p>Then continue to follow the instructions in Section 1.3 to build your own MicroPython UF2 firmware.
+This will allow the REPL to be accessed over a UART port, through two GPIO pins. The default settings for UARTs are
+taken from the C SDK.</p>
+<p>The table below shows the Default UART ettings in MicroPython</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Function</em></p></td>
+<td><p><em>Default</em></p></td>
+</tr>
+<tr class="row-even"><td><p>UART_BAUDRATE</p></td>
+<td><p>115200</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_BITS</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_STOP</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_TX</p></td>
+<td><p>Pin 0</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_RX</p></td>
+<td><p>Pin 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_TX</p></td>
+<td><p>Pin 4</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_RX</p></td>
+<td><p>Pin 5</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>This alternative interface is handy if you have trouble with USB, if you don’t have any free USB ports, or if you are using
+some other RP2040-based board which doesn’t have an exposed USB connector.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This initially occupies the UART0 peripheral on RP2040. The UART1 peripheral is free for you to use in your Python code
+as a second UART.</p>
+</div>
+<p>The next thing you’ll need to do is to enable UART serial on the Raspberry Pi. To do so, run raspi-config</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>$sudo raspi-config</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>and go to Interfacing Options → Serial and select “No” when asked “Would you like a login shell to be accessible over
+serial?” and “Yes” when asked “Would you like the serial port hardware to be enabled?”. You should see something like</p>
+<blockquote>
+<div><p>———————————————image</p>
+</div></blockquote>
+<p>Leaving raspi-config you should choose “Yes” and reboot your Raspberry Pi to enable the serial port.
+You should then wire the Raspberry Pi and the Raspberry Pi Pico together with the following mapping:</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h1>UART<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>REPL over UART is disabled by default. See Section 2.2 for details of how to enable REPL over UART</p>
+</div>
+<p>Example usage looping UART0 to UART1.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">UART</span><span class="p">,</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">uart1</span> <span class="o">=</span> <span class="n">UART</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">9600</span><span class="p">,</span> <span class="n">tx</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> <span class="n">rx</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+
+<span class="n">uart0</span> <span class="o">=</span> <span class="n">UART</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">9600</span><span class="p">,</span> <span class="n">tx</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">rx</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">txData</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;hello world</span><span class="se">\n\r</span><span class="s1">&#39;</span>
+<span class="n">uart1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">txData</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">rxData</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">uart0</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="n">rxData</span> <span class="o">+=</span> <span class="n">uart0</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rxData</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adc">
+<h1>ADC<a class="headerlink" href="#adc" title="Permalink to this headline">¶</a></h1>
+<p>An analogue-to-digital converter (ADC) measures some analogue signal and encodes it as a digital number. The ADC on
+RP2040 measures voltages.</p>
+<p>An ADC has two key features: its resolution, measured in digital bits, and its channels, or how many analogue signals it
+can accept and convert at once. The ADC on RP2040 has a resolution of 12-bits, meaning that it can transform an
+analogue signal into a digital signal as a number ranging from 0 to 4095 – though this is handled in MicroPython
+transformed to a 16-bit number ranging from 0 to 65,535, so that it behaves the same as the ADC on other MicroPython
+microcontrollers.
+RP2040 has five ADC channels total, four of which are brought out to chip GPIOs: GP26, GP27, GP28 and GP29. On
+Raspberry Pi Pico, the first three of these are brought out to GPIO pins, and the fourth can be used to measure the VSYS
+voltage on the board.
+The ADC’s fifth input channel is connected to a temperature sensor built into RP2040.
+You can specify which ADC channel you’re using by pin number, e.g.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">adc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span> <span class="c1"># Connect to GP26, which is channel 0</span>
+</pre></div>
+</div>
+<p>or by channel</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">adc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1"># Connect to the internal temperature sensor</span>
+<span class="n">adc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Connect to channel 0 (GP26)</span>
+</pre></div>
+</div>
+<p>An example reading the fourth analogue-to-digital (ADC) converter channel, connected to the internal temperature
+sensor:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="kn">import</span> <span class="nn">utime</span>
+
+<span class="n">sensor_temp</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">conversion_factor</span> <span class="o">=</span> <span class="mf">3.3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">65535</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="n">reading</span> <span class="o">=</span> <span class="n">sensor_temp</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span> <span class="o">*</span> <span class="n">conversion_factor</span>
+
+<span class="n">The</span> <span class="n">temperature</span> <span class="n">sensor</span> <span class="n">measures</span> <span class="n">the</span> <span class="n">Vbe</span> <span class="n">voltage</span> <span class="n">of</span> <span class="n">a</span> <span class="n">biased</span> <span class="n">bipolar</span> <span class="n">diode</span><span class="p">,</span> <span class="n">connected</span> <span class="n">to</span>
+<span class="n">the</span> <span class="n">fifth</span> <span class="n">ADC</span> <span class="n">channel</span>
+<span class="n">Typically</span><span class="p">,</span> <span class="n">Vbe</span> <span class="o">=</span> <span class="mf">0.706</span><span class="n">V</span> <span class="n">at</span> <span class="mi">27</span> <span class="n">degrees</span> <span class="n">C</span><span class="p">,</span> <span class="k">with</span> <span class="n">a</span> <span class="n">slope</span> <span class="n">of</span> <span class="o">-</span><span class="mf">1.721</span><span class="n">mV</span> <span class="p">(</span><span class="mf">0.001721</span><span class="p">)</span> <span class="n">per</span> <span class="n">degree</span><span class="o">.</span>
+<span class="n">temperature</span> <span class="o">=</span> <span class="mi">27</span> <span class="o">-</span> <span class="p">(</span><span class="n">reading</span> <span class="o">-</span> <span class="mf">0.706</span><span class="p">)</span><span class="o">/</span><span class="mf">0.001721</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+<span class="n">utime</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interrupts">
+<h1>Interrupts<a class="headerlink" href="#interrupts" title="Permalink to this headline">¶</a></h1>
+<p>You can set an IRQ like this:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+
+<span class="n">p2</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_UP</span><span class="p">)</span>
+<span class="n">p2</span><span class="o">.</span><span class="n">irq</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pin</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IRQ with flags:&quot;</span><span class="p">,</span> <span class="n">pin</span><span class="o">.</span><span class="n">irq</span><span class="p">()</span><span class="o">.</span><span class="n">flags</span><span class="p">()),</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IRQ_FALLING</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It should print out something when GP2 has a falling edge</p>
+</div>
+<div class="section" id="multicore-support">
+<h1>Multicore Support<a class="headerlink" href="#multicore-support" title="Permalink to this headline">¶</a></h1>
+<p>Example Usage:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">_thread</span><span class="o">,</span> <span class="nn">machine</span>
+
+<span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="n">led</span><span class="o">.</span><span class="n">high</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">low</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">)</span>
+
+<span class="n">_thread</span><span class="o">.</span><span class="n">start_new_thread</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Only one thread can be started/running at any one time, because there is no RTOS just a second core. The GIL is not
+enabled so both core0 and core1 can run Python code concurrently, with care to use locks for shared data</p>
+</div>
+<div class="section" id="i2c">
+<h1>I2C<a class="headerlink" href="#i2c" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">i2c</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+<span class="n">i2c</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="mi">76</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;123&#39;</span><span class="p">)</span>
+<span class="n">i2c</span><span class="o">.</span><span class="n">readfrom</span><span class="p">(</span><span class="mi">76</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">i2c</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+<span class="n">i2c</span><span class="o">.</span><span class="n">writeto_mem</span><span class="p">(</span><span class="mi">76</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;456&#39;</span><span class="p">)</span>
+<span class="n">i2c</span><span class="o">.</span><span class="n">readfrom_mem</span><span class="p">(</span><span class="mi">76</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I2C can be constructed without specifying the frequency, if you just want all the defaults.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">I2C</span>
+
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># defaults to SCL=Pin(9), SDA=Pin(8), freq=400000</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There may be some bugs reading/writing to device addresses that do not respond, the hardware seems to lock up in some cases</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Function</em></p></td>
+<td><p><em>Default</em></p></td>
+</tr>
+<tr class="row-even"><td><p>I2C Frequency</p></td>
+<td><p>400,000</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2C0 SCL</p></td>
+<td><p>Pin 9</p></td>
+</tr>
+<tr class="row-even"><td><p>I2C0 SDA</p></td>
+<td><p>Pin 8</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2C1 SCL</p></td>
+<td><p>Pin 7</p></td>
+</tr>
+<tr class="row-even"><td><p>I2C1 SDA</p></td>
+<td><p>Pin 6</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="spi">
+<h1>SPI<a class="headerlink" href="#spi" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">SPI</span>
+
+<span class="n">spi</span> <span class="o">=</span> <span class="n">SPI</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">spi</span> <span class="o">=</span> <span class="n">SPI</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">)</span>
+<span class="n">spi</span> <span class="o">=</span> <span class="n">SPI</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="n">polarity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">spi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">buf</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">spi</span><span class="o">.</span><span class="n">write_readinto</span><span class="p">(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The chip select must be managed separately using a machine.Pin.</p>
+</div>
+</div>
+<div class="section" id="pwm">
+<h1>PWM<a class="headerlink" href="#pwm" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example using PWM to fade an LED.</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">PWM</span>
+
+
+<span class="c1"># Construct PWM object, with LED on Pin(25).</span>
+<span class="n">pwm</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+
+<span class="c1"># Set the PWM frequency.</span>
+<span class="n">pwm</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Fade the LED in and out a few times.</span>
+<span class="n">duty</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">direction</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="mi">256</span><span class="p">):</span>
+<span class="n">duty</span> <span class="o">+=</span> <span class="n">direction</span>
+<span class="k">if</span> <span class="n">duty</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+<span class="n">duty</span> <span class="o">=</span> <span class="mi">255</span>
+<span class="n">direction</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="k">elif</span> <span class="n">duty</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="n">duty</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">direction</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">pwm</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">duty</span> <span class="o">*</span> <span class="n">duty</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pio-support">
+<h1>PIO Support<a class="headerlink" href="#pio-support" title="Permalink to this headline">¶</a></h1>
+<p>Current support allows you to define Programmable IO (PIO) Assembler blocks and using them in the PIO peripheral,
+more documentation around PIO can be found in Chapter 3 of the RP2040 Datasheet and Chapter 4 of the Raspberry Pi
+Pico C/C++ SDK book.
+The Raspberry Pi Pico MicroPython introduces a new &#64;rp2.asm_pio decorator, along with a rp2.PIO class. The definition of
+a PIO program, and the configuration of the state machine, into 2 logical parts:
+• The program definition, including how many pins are used and if they are in/out pins. This goes in the &#64;rp2.asm_pio
+definition. This is close to what the pioasm tool from the SDK would generate from a .pio file (but here it’s all
+defined in Python).
+• The program instantiation, which sets the frequency of the state machine and which pins to bind to. These get set
+when setting a SM to run a particular program.
+The aim was to allow a program to be defined once and then easily instantiated multiple times (if needed) with different
+GPIO. Another aim was to make it easy to basic things without getting weighed down in too much PIO/SM
+configuration.
+Example usage, to blink the on-board LED connected to GPIO 25</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">rp2</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+
+<span class="c1"># Define the blink program. It has one GPIO to bind to on the set instruction, which is an</span>
+<span class="n">output</span> <span class="n">pin</span><span class="o">.</span>
+<span class="c1"># Use lots of delays to make the blinking visible by eye.</span>
+<span class="nd">@rp2</span><span class="o">.</span><span class="n">asm_pio</span><span class="p">(</span><span class="n">set_init</span><span class="o">=</span><span class="n">rp2</span><span class="o">.</span><span class="n">PIO</span><span class="o">.</span><span class="n">OUT_LOW</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">blink</span><span class="p">():</span>
+<span class="n">wrap_target</span><span class="p">()</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">pins</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">pins</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">wrap</span><span class="p">()</span>
+
+<span class="c1"># Instantiate a state machine with the blink program, at 2000Hz, with set bound to Pin(25)</span>
+<span class="p">(</span><span class="n">LED</span> <span class="n">on</span> <span class="n">the</span> <span class="n">rp2</span> <span class="n">board</span><span class="p">)</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">rp2</span><span class="o">.</span><span class="n">StateMachine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">blink</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">set_base</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+
+<span class="c1"># Run the state machine for 3 seconds. The LED should blink.</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The idea is that for the 4 sets of pins (in, out, set, sideset, excluding jmp) that can be connected to a state machine,
+there’s the following that need configuring for each set:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>base GPIO</p></li>
+<li><p>number of consecutive GPIO</p></li>
+<li><p>initial GPIO direction (in or out pin)</p></li>
+<li><p>initial GPIO value (high or low</p></li>
+</ol>
+</div></blockquote>
+<p>In the design of the Python API for PIO these 4 items are split into “declaration” (items 2-4) and “instantiation” (item 1).
+In other words, a program is written with items 2-4 fixed for that program (eg a WS2812 driver would have 1 output pin)
+and item 1 is free to change without changing the program (eg which pin the WS2812 is connected to).
+So in the &#64;asm_pio decorator you declare items 2-4, and in the StateMachine constructor you say which base pin to use
+(item 1). That makes it easy to define a single program and instantiate it multiple times on different pins (you can’t
+really change items 2-4 for a different instantiation of the same program, it doesn’t really make sense to do that).
+And the same keyword arg (in the case about it’s sideset_pins) is used for both the declaration and instantiation, to
+show that they are linked.
+To declare multiple pins in the decorator (the count, ie item 2 above), you use a tuple/list of values. And each item in the
+tuple/list specified items 3 and 4.</p>
+</div>
+<div class="section" id="irq">
+<h1>IRQ<a class="headerlink" href="#irq" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">rp2</span>
+
+<span class="nd">@rp2</span><span class="o">.</span><span class="n">asm_pio</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">irq_test</span><span class="p">():</span>
+<span class="n">wrap_target</span><span class="p">()</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">irq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">nop</span><span class="p">()</span> <span class="p">[</span><span class="mi">31</span><span class="p">]</span>
+<span class="n">irq</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wrap</span><span class="p">()</span>
+
+<span class="n">rp2</span><span class="o">.</span><span class="n">PIO</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">irq</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pio</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">pio</span><span class="o">.</span><span class="n">irq</span><span class="p">()</span><span class="o">.</span><span class="n">flags</span><span class="p">()))</span>
+
+<span class="n">sm</span> <span class="o">=</span> <span class="n">rp2</span><span class="o">.</span><span class="n">StateMachine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">irq_test</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uart-tx">
+<h1>UART TX<a class="headerlink" href="#uart-tx" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example using PIO to create a UART TX interface</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">from</span> <span class="nn">rp2</span> <span class="kn">import</span> <span class="n">PIO</span><span class="p">,</span> <span class="n">StateMachine</span><span class="p">,</span> <span class="n">asm_pio</span>
+
+<span class="n">UART_BAUD</span> <span class="o">=</span> <span class="mi">115200</span>
+<span class="n">PIN_BASE</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">UM_UARTS</span> <span class="o">=</span> <span class="mi">8</span>
+
+
+<span class="nd">@asm_pio</span><span class="p">(</span><span class="n">sideset_init</span><span class="o">=</span><span class="n">PIO</span><span class="o">.</span><span class="n">OUT_HIGH</span><span class="p">,</span> <span class="n">out_init</span><span class="o">=</span><span class="n">PIO</span><span class="o">.</span><span class="n">OUT_HIGH</span><span class="p">,</span> <span class="n">out_shiftdir</span><span class="o">=</span><span class="n">PIO</span><span class="o">.</span><span class="n">SHIFT_RIGHT</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">uart_tx</span><span class="p">():</span>
+<span class="c1"># Block with TX deasserted until data available</span>
+<span class="n">pull</span><span class="p">()</span>
+<span class="c1"># Initialise bit counter, assert start bit for 8 cycles</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="o">.</span><span class="n">side</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+<span class="c1"># Shift out 8 data bits, 8 execution cycles per bit</span>
+<span class="n">label</span><span class="p">(</span><span class="s2">&quot;bitloop&quot;</span><span class="p">)</span>
+<span class="n">out</span><span class="p">(</span><span class="n">pins</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">jmp</span><span class="p">(</span><span class="n">x_dec</span><span class="p">,</span> <span class="s2">&quot;bitloop&quot;</span><span class="p">)</span>
+<span class="c1"># Assert stop bit for 8 cycles total (incl 1 for pull())</span>
+<span class="n">nop</span><span class="p">()</span> <span class="o">.</span><span class="n">side</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="c1"># Now we add 8 UART TXs, on pins 10 to 17. Use the same baud rate for all of them.</span>
+<span class="n">uarts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_UARTS</span><span class="p">):</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">StateMachine</span><span class="p">(</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">uart_tx</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">8</span> <span class="o">*</span> <span class="n">UART_BAUD</span><span class="p">,</span> <span class="n">sideset_base</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="n">PIN_BASE</span> <span class="o">+</span> <span class="n">i</span><span class="p">),</span> <span class="n">out_base</span><span class="o">=</span><span class="n">Pin</span>
+ <span class="p">(</span><span class="n">PIN_BASE</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="n">sm</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">uarts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
+
+<span class="n">We</span> <span class="n">can</span> <span class="nb">print</span> <span class="n">characters</span> <span class="kn">from</span> <span class="nn">each</span> <span class="n">UART</span> <span class="n">by</span> <span class="n">pushing</span> <span class="n">them</span> <span class="n">to</span> <span class="n">the</span> <span class="n">TX</span> <span class="n">FIFO</span>
+<span class="k">def</span> <span class="nf">pio_uart_print</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need to specify an initial OUT pin state in your program in order to be able to pass OUT mapping to your SM instantiation, even though in this program it is redundant because the mappings overlap.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="micropython.html" class="btn btn-neutral float-left" title="Getting started with MicroPython on RaspberryPi Pico Port" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Niti Kaur.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

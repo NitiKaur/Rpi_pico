@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Getting started with MicroPython on RaspberryPi Pico Port &mdash; MicroPython 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Setting up the Pico Port" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MicroPython
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="information.html">General Information about Raspberry Pi Pico Port</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setting up the Pico Port</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started with MicroPython on RaspberryPi Pico Port</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MicroPython</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Getting started with MicroPython on RaspberryPi Pico Port</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/micropython.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started-with-micropython-on-raspberrypi-pico-port">
+<h1>Getting started with MicroPython on RaspberryPi Pico Port<a class="headerlink" href="#getting-started-with-micropython-on-raspberrypi-pico-port" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>These instructions focus on Windows, however the guide can be used for Linux and Mac installation as well.</dt><dd><p>using the tools for your operating system instead.</p>
+</dd>
+</dl>
+<p><strong>1. Installation of MicroPython on Raspberry Pi Pico</strong></p>
+<p>MicroPython is basically Python programming language for microcontrollers. The simple to understand syntax coupled with extensive libraries designed to make programming various  development boards easier for beginners.While regular Raspberry Pi boards do use Python, you’ll need to follow a dedicated Raspberry Pi tutorial as the steps here don’t apply to single-board computers.</p>
+<p>The Raspberry Pi Foundation has made it incredibly easy to install MicroPython onto the Pi Pico. It uses the UF2 file extension, designed specifically for flashing microcontrollers over USB. Instead of needing a special programmer or piece of software, you can copy code over like you would a file to a pen drive or external hard drive.</p>
+<p>The MicroPython environment is available as a downloadable UF2 file from the <a class="reference external" href="https://www.raspberrypi.org/documentation/rp2040/getting-started/#getting-started-with-micropython">Pi Foundation website</a></p>
+<p>..image:: /home/niti/Downloads/Pi_Pico_uf2.png</p>
+<p>To install the MicroPython environment on to your Raspberry Pi Pico, follow these steps:</p>
+<ol class="arabic simple">
+<li><p>Download the MicroPython UF2 file from the Raspberry Pi website</p></li>
+<li><p>Hold down the BOOTSEL button on your Pico and plug it into your computer’s USB port.</p></li>
+<li><p>Open Explorer, and open the RPI-RP2 directory like you would any other hard drive</p></li>
+<li><p>Drag and drop the UF2 file into the RPI-RP2 directory</p></li>
+</ol>
+<blockquote>
+<div><p>You can now open a terminal program like Putty to talk to the Pi Pico over the USB Serial port, but there’s a much better way to interact with your Pico: The Thonny IDE.</p>
+</div></blockquote>
+<p><strong>2. Install Thonny IDE</strong></p>
+<p>Thonny is an open-source Python integrated development environment (IDE) designed for beginners. It’s powerful, easy to understand, and already comes with MicroPython and Raspberry Pi Pico support.</p>
+<p>To get Thonny, download it for free from the official website by clicking the <a class="reference external" href="https://thonny.org/">link</a> in the top right corner.</p>
+<p>..image:: /home/niti/Downloads/Thonny_site.png</p>
+<p>When the download finishes, install and open the Thonny IDE. You’ll be asked what language you’d like Thonny to run in before being greeted with a new Thonny window. Make sure your Pi Pico is plugged in, click on the button on the bottom right of the window that reads Python, and change it to MicroPython (Raspberry Pi Pico).</p>
+<p>The REPL window should change to show you are now running on the Pico, and you can test it out with a quick Hello World!</p>
+<p>Let’s test it.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output should be-</p>
+<blockquote>
+<div><p>Hello World</p>
+</div></blockquote>
+<p><strong>3. Programm the Raspberry Pi Pico</strong></p>
+<p>MicroPython is identical in syntax to regular Python, and if you aren’t familiar, it’s worth <a class="reference external" href="https://www.makeuseof.com/python-hello-world/">learning the basics of Python</a>  to understand Pi Pico code better. If you don’t know Python, don’t worry! This tutorial uses example code to get you going without needing any previous programming experience.</p>
+<p>The Raspberry Pi Foundation provides example code to help you get started coding the Pico, which is available from its official <a class="reference external" href="https://github.com/raspberrypi/pico-micropython-examples">GitHub</a> repository. To get the examples, click on Code &gt; Download ZIP and extract them to a directory of your choice. In Thonny, use Ctrl + o or select File &gt; Open to open the blink.py example. The code should look like this:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">Timer</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">tim</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">tick</span><span class="p">(</span><span class="n">timer</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">led</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>
+<span class="n">tim</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Timer</span><span class="o">.</span><span class="n">PERIODIC</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">tick</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Click the green run button. A popup will ask you where you want to save the file. Select your Raspberry Pi Pico, and rename the file to main.py.</p>
+<p>..image:: /home/niti/Downloads/thonny_ide.png</p>
+<p>You should see your LED blinking! Renaming the file to main.py is optional, though if you want your code to run when the Pico is connected to an external power source rather than a computer, you’ll need to do it. The Pico looks for a main.py when it boots up for instructions, and if it isn’t there, it won’t do anything.</p>
+<p>Another neat thing you may notice is that the REPL is still active. The timer and LED are working in the background now, leaving you free to send more commands to the Pico through the REPL</p>
+<p><strong>4. Something More Advanced</strong></p>
+<p>Getting an LED to blink is a great start, but to get a sense of just how useful the Raspberry Pi Pico can be, let’s test the onboard temperature sensor. Once again, the Raspberry Pi foundation makes this easy to do. It provides example code to read from the onboard sensor, convert it into human-readable temperature information, and print it to the Thonny REPL.</p>
+<p>..image:: /home/niti/Downloads/temp_sensor.png</p>
+<p>Open adc &gt; temperature.py in the examples folder, or simply copy the raw code directly from GitHub into Thonny, before saving it as main.py. The code should look like this:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="kn">import</span> <span class="nn">utime</span>
+<span class="n">sensor_temp</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">conversion_factor</span> <span class="o">=</span> <span class="mf">3.3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">65535</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">reading</span> <span class="o">=</span> <span class="n">sensor_temp</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span> <span class="o">*</span> <span class="n">conversion_factor</span>
+
+    <span class="c1"># The temperature sensor measures the Vbe voltage of a biased bipolar diode, connected to the fifth ADC channel</span>
+    <span class="c1"># Typically, Vbe = 0.706V at 27 degrees C, with a slope of -1.721mV (0.001721) per degree.</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="mi">27</span> <span class="o">-</span> <span class="p">(</span><span class="n">reading</span> <span class="o">-</span> <span class="mf">0.706</span><span class="p">)</span><span class="o">/</span><span class="mf">0.001721</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+    <span class="n">utime</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Click the green run button, and the code should start to run, printing the current ambient temperature into the Thonny REPL.</p>
+<p><strong>5. Let your imagination go wild</strong></p>
+<p>Now that you are set up to program the Pico, you can experiment with its features using the MicroPython library. There are already many beginner projects and tutorials for the Pi Pico, and the Raspberry Pi Foundation has even released an official book on the Pico, available from the <a class="reference external" href="https://www.raspberrypi.org/blog/new-book-get-started-with-micropython-on-raspberry-pi-pico/">Raspberry Pi website</a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="setup.html" class="btn btn-neutral float-left" title="Setting up the Pico Port" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Niti Kaur.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Setting up the Pico Port &mdash; MicroPython 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started with MicroPython on RaspberryPi Pico Port" href="micropython.html" />
+    <link rel="prev" title="General Information about Raspberry Pi Pico Port" href="information.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MicroPython
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="information.html">General Information about Raspberry Pi Pico Port</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information.html#technical-specifications">Technical Specifications</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up the Pico Port</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-the-port-with-j-link">Setting the port with J-Link</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-segger-flying-wire-adapter">Using SEGGER Flying Wire Adapter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="micropython.html">Getting started with MicroPython on RaspberryPi Pico Port</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html">Connection to the MicroPython REPL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#id1">UART</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#adc">ADC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#interrupts">Interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#multicore-support">Multicore Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#i2c">I2C</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#spi">SPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#pwm">PWM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#pio-support">PIO Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#irq">IRQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html#uart-tx">UART TX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ide.html">Getting Started</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MicroPython</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Setting up the Pico Port</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setting-up-the-pico-port">
+<h1>Setting up the Pico Port<a class="headerlink" href="#setting-up-the-pico-port" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setting-the-port-with-j-link">
+<h2>Setting the port with J-Link<a class="headerlink" href="#setting-the-port-with-j-link" title="Permalink to this headline">¶</a></h2>
+<p>The Pico port has an external SWD connector. The 3 pins being SWCLK, GND, SWDIO.To setup the board using J-Link, the following setups are required-</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Soldering the 3-pin pin strip to the debug connector pads.</p></li>
+<li><p>Solder the  pin Strip to the GPIO pads of the evaluation board. The relevant pad being Pad 36 (3V3(OUT))</p></li>
+<li><p>Connecting the J-Link to the evaluation board, using jumper wires as follows:</p></li>
+</ol>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 32%" />
+<col style="width: 29%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Pin RP Pico</p></td>
+<td><p>Pin J-Link</p></td>
+<td><p>Signal</p></td>
+</tr>
+<tr class="row-even"><td><p>“DEBUG” “SWCLK”</p></td>
+<td><p>9</p></td>
+<td><p>SWCLK</p></td>
+</tr>
+<tr class="row-odd"><td><p>“DEBUG” “GND”</p></td>
+<td><p>4</p></td>
+<td><p>GND</p></td>
+</tr>
+<tr class="row-even"><td><p>“DEBUG” “SWDIO”</p></td>
+<td><p>7</p></td>
+<td><p>SWDIO</p></td>
+</tr>
+<tr class="row-odd"><td><p>“3V3” Pad 36</p></td>
+<td><p>1</p></td>
+<td><p>VTREF</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="using-segger-flying-wire-adapter">
+<h2>Using SEGGER Flying Wire Adapter<a class="headerlink" href="#using-segger-flying-wire-adapter" title="Permalink to this headline">¶</a></h2>
+<p>For a more reliable, simpler solution, the SEGGER Flying Wire Adapter is recommended.</p>
+<p>Adapts from the standard 20 pin 0.1” J-Link connector to a 10-pin row, allowing to connect J-Link to target PCBs via flying wires.</p>
+<p>Used in the following cases -</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>When hooking up prototype HW where no final connector is decided yet.</p></li>
+<li><p>Manually connecting a J-Link to ST Discovery boards.</p></li>
+</ol>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/pp4.jpeg"><img alt="ESP32 board" src="_images/pp4.jpeg" style="width: 640px;" /></a>
+<p>For more information see this <a class="reference external" href="https://www.segger.com/downloads/jlink/UM08001">USER MANUAL</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="micropython.html" class="btn btn-neutral float-right" title="Getting started with MicroPython on RaspberryPi Pico Port" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="information.html" class="btn btn-neutral float-left" title="General Information about Raspberry Pi Pico Port" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Niti Kaur.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
