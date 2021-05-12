@@ -1,0 +1,6 @@
+sphinx
+python3
+sphinc_rtd_theme
+crawler
+beautifulsoup4
+requests
