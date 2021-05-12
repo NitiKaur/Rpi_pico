@@ -38,9 +38,6 @@ Used in the following cases -
 
 
 
-.. image:: /img/pp4.jpeg
-    :alt: ESP32 board
-    :width: 640px
 
 
 For more information see this `USER MANUAL <https://www.segger.com/downloads/jlink/UM08001>`_

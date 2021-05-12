@@ -14,7 +14,12 @@ The Raspberry Pi Foundation has made it incredibly easy to install MicroPython o
 
 The MicroPython environment is available as a downloadable UF2 file from the `Pi Foundation website <https://www.raspberrypi.org/documentation/rp2040/getting-started/#getting-started-with-micropython>`_
 
-..image:: /home/niti/Downloads/Pi_Pico_uf2.png
+
+
+
+.. image:: /img/Pi_Pico_uf2.png
+    :alt: ESP32 board
+    :width: 640px
 
 To install the MicroPython environment on to your Raspberry Pi Pico, follow these steps:
 
@@ -69,6 +74,10 @@ Click the green run button. A popup will ask you where you want to save the file
 
 ..image:: /home/niti/Downloads/thonny_ide.png
 
+
+.. image:: /img/thonny_ide.png
+    :alt: ESP32 board
+    :width: 640px
 You should see your LED blinking! Renaming the file to main.py is optional, though if you want your code to run when the Pico is connected to an external power source rather than a computer, you'll need to do it. The Pico looks for a main.py when it boots up for instructions, and if it isn't there, it won't do anything.
 
 Another neat thing you may notice is that the REPL is still active. The timer and LED are working in the background now, leaving you free to send more commands to the Pico through the REPL
